@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "8cd4b449-791c-48db-92ec-b03eb6816689",
+		"name": "ShoppingWithBeaconsServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "206.81.0.65:3000/api/v1/items",
+					"host": [
+						"206",
+						"81",
+						"0",
+						"65"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "206.81.0.65:3000/api/v1/items?region=grocery   ",
+					"host": [
+						"206",
+						"81",
+						"0",
+						"65"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"items"
+					],
+					"query": [
+						{
+							"key": "region",
+							"value": "grocery   "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get item images",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "206.81.0.65:3000/api/v1/images/coca-cola.png",
+					"host": [
+						"206",
+						"81",
+						"0",
+						"65"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"images",
+						"coca-cola.png"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
