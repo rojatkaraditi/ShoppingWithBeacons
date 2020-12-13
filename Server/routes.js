@@ -83,6 +83,25 @@ route.get('/items',[
     }
 
 
+});
+
+route.post('/write',(request,response)=>{
+    fs.appendFile('stringTest.txt',request.body.str+"\n",(err,data)=>{
+        if(err){
+            return response.status(400).send("string not saved");
+        }
+        return response.status(200).send("string saved");
+    });
+});
+
+route.get('/read',(request,response)=>{
+    fs.readFile('stringTest.txt','utf8',(err,data)=>{
+        if(err){
+            return response.status(400).json({"error":err});
+        }
+        fs.truncateSync('stringTest.txt',0);
+        return response.status(200).json({"string":data});
+    })
 })
 
 module.exports = route; 

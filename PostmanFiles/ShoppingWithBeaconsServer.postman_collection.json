@@ -34,7 +34,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "206.81.0.65:3000/api/v1/items?region=grocery   ",
+					"raw": "206.81.0.65:3000/api/v1/items?region=produce   ",
 					"host": [
 						"206",
 						"81",
@@ -50,7 +50,7 @@
 					"query": [
 						{
 							"key": "region",
-							"value": "grocery   "
+							"value": "produce   "
 						}
 					]
 				}
@@ -63,7 +63,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "206.81.0.65:3000/api/v1/images/coca-cola.png",
+					"raw": "206.81.0.65:3000/api/v1/images/oranges.png",
 					"host": [
 						"206",
 						"81",
@@ -75,7 +75,62 @@
 						"api",
 						"v1",
 						"images",
-						"coca-cola.png"
+						"oranges.png"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "206.81.0.65:3000/api/v1/write",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"str\":\"goodbye\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "206.81.0.65:3000/api/v1/write",
+					"host": [
+						"206",
+						"81",
+						"0",
+						"65"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"write"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "206.81.0.65:3000/api/v1/read",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "206.81.0.65:3000/api/v1/read",
+					"host": [
+						"206",
+						"81",
+						"0",
+						"65"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"read"
 					]
 				}
 			},
