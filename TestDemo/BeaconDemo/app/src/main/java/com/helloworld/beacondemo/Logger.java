@@ -64,6 +64,7 @@ public class Logger {
             super.onPostExecute(aVoid);
             if (isSuccessful){
                 Toast.makeText(activity, "log sent, successful", Toast.LENGTH_SHORT).show();
+                logs.clear();
             }else{
                 Toast.makeText(activity, "log sent, failed", Toast.LENGTH_SHORT).show();
             }
