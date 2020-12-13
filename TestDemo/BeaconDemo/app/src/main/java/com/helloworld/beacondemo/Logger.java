@@ -2,6 +2,7 @@ package com.helloworld.beacondemo;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class Logger {
                     .build();
             try (Response response = client.newCall(request).execute()) {
                 result = response.body().string();
+                Log.d("demo", "doInBackground: response=>"+result);
                 if (!response.isSuccessful()) isSuccessful = false;
             } catch (IOException e) {
                 e.printStackTrace();
