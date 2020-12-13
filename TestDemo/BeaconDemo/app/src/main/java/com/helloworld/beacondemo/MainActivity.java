@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private static Map<String, List<String>> PLACES_BY_BEACONS;
     int count = 1;
     Logger logger;
+    TextView nearest_tv,output_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         logger =  new Logger(this);
+        nearest_tv = findViewById(R.id.nearest_tv);
+        output_tv = findViewById(R.id.output_tv);
 
         Map<Integer, String> listBeaconMap = new HashMap<>();
         listBeaconMap.put(49427,"B1");
@@ -64,12 +68,16 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("demo","Count is : "+count++);
                     logger.Log("demo","Count is : "+count++);
 //                    Log.d("demo","---------------------");
+                    String output = "";
                     for(Beacon beacon: list){
                         Log.d("demo",listBeaconMap.get(beacon.getMajor()) +" -> "+beacon.getRssi());
                         logger.Log("demo",listBeaconMap.get(beacon.getMajor()) +" -> "+beacon.getRssi());
+                        output += listBeaconMap.get(beacon.getMajor()) +" -> "+beacon.getRssi()+"\n";
                     }
+                    output_tv.setText(output);
                     Log.d("demo","---------------------");
                     Beacon nearestBeacon = list.get(0);
+                    nearest_tv.setText(listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
                     logger.Log("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","---------------------");
