@@ -22,13 +22,14 @@ public class Mechanism1 {
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
-//        this.states.add(ALL_ITEMS);
+        this.states.add(ALL_ITEMS);
+        this.states.add(ALL_ITEMS);
         // every 2 seconds it will add All_items state if there is no add state function called
         updateStates = new Handler();
         runnable =  new Runnable() {
             @Override
             public void run() {
-                AddState(states.get(2));
+                AddState(states.get(states.size()-1));
                 Log.d(TAG, "run: called, adding last added element");
             }
         };
@@ -52,7 +53,7 @@ public class Mechanism1 {
         // checking if all value on states are same;
         boolean isConsecutive = true;
         for(int i=1;i<states.size();i++){
-            Log.d(TAG, "CheckForConsecutiveAreSame: i-1=>"+states.get(i-1)+" i=>"+states.get(i));
+            Log.d(TAG, "CheckForConsecutiveAreSame: "+(i-1)+"=>"+states.get(i-1)+" "+i+"=>"+states.get(i));
             if (!states.get(i-1).equals(states.get(i))) return false;
         }
         return isConsecutive;
