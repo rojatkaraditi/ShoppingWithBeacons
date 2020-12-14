@@ -32,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private BeaconRegion region;
     private static Map<String, List<String>> PLACES_BY_BEACONS;
     int count = 1;
-    Logger logger;
     TextView nearest_tv,output_tv;
+    Algo1 algo1;
+    String currentState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logger =  new Logger(this);
         nearest_tv = findViewById(R.id.nearest_tv);
         output_tv = findViewById(R.id.output_tv);
 
@@ -49,16 +49,14 @@ public class MainActivity extends AppCompatActivity {
         listBeaconMap.put(26535,"A100");
         listBeaconMap.put(7518,"D7");
         listBeaconMap.put(49357,"D8");
+        // starting new algo1
+        algo1 =  new Algo1(listBeaconMap);
+        currentState = algo1.getCurrentState();
         beaconManager = new BeaconManager(this);
         region = new BeaconRegion("ranged region",
                 UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
 
-        findViewById(R.id.send_log_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logger.SendLogs();
-            }
-        });
+
 
         // add this below:
         beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
@@ -66,25 +64,24 @@ public class MainActivity extends AppCompatActivity {
             public void onBeaconsDiscovered(BeaconRegion region, List<Beacon> list) {
                 if (!list.isEmpty()) {
                     Log.d("demo","Count is : "+count++);
-                    logger.Log("demo","Count is : "+count++);
-//                    Log.d("demo","---------------------");
+
                     String output = "";
                     for(Beacon beacon: list){
                         Log.d("demo",listBeaconMap.get(beacon.getMajor()) +" -> "+beacon.getRssi());
-                        logger.Log("demo",listBeaconMap.get(beacon.getMajor()) +" -> "+beacon.getRssi());
                         output += listBeaconMap.get(beacon.getMajor()) +" -> "+beacon.getRssi()+"\n";
                     }
                     output_tv.setText(output);
                     Log.d("demo","---------------------");
                     Beacon nearestBeacon = list.get(0);
+                    // adding first beacon to states
+                    algo1.AddState(listBeaconMap.get(nearestBeacon.getMajor()));
                     nearest_tv.setText(listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
-                    logger.Log("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","---------------------");
-                    logger.Log("demo","---------------------");
                     List<String> places = placesNearBeacon(nearestBeacon);
                     // TODO: update the UI here
 //                    Log.d("Airport", "Nearest places: " + places);
+                    UpdateUI();
                 }
             }
         });
@@ -117,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
         }});
             PLACES_BY_BEACONS = Collections.unmodifiableMap(placesByBeacons);
         }
+
+    private void UpdateUI() {
+        if (!currentState.equals(algo1.getCurrentState())){
+            nearest_tv.setText(algo1.getCurrentState());
+        }
+    }
 
 
     @Override
