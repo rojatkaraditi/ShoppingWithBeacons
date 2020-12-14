@@ -22,29 +22,29 @@ public class Mechanism1 {
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
-        this.states.add(ALL_ITEMS);
-        this.states.add(ALL_ITEMS);
+//        this.states.add(ALL_ITEMS);
+//        this.states.add(ALL_ITEMS);
         // every 2 seconds it will add All_items state if there is no add state function called
-        updateStates = new Handler();
-        runnable =  new Runnable() {
-            @Override
-            public void run() {
-                AddState(states.get(states.size()-1));
-                Log.d(TAG, "run: called, adding last added element");
-            }
-        };
-        updateStates.postDelayed(runnable,5000);
+//        updateStates = new Handler();
+//        runnable =  new Runnable() {
+//            @Override
+//            public void run() {
+//                AddState(states.get(states.size()-1));
+//                Log.d(TAG, "run: called, adding last added element");
+//            }
+//        };
+//        updateStates.postDelayed(runnable,5000);
     }
 
     public void AddState(String state){
         Log.d(TAG, "AddState: called with state=>"+state);
         // cancel the handler
-        updateStates.removeCallbacks(runnable);
+//        updateStates.removeCallbacks(runnable);
         states.remove(0);
         states.add(state);
         if (CheckForConsecutiveAreSame()) currentState = state;
         //start the handler
-        updateStates.postDelayed(runnable,5000);
+//        updateStates.postDelayed(runnable,5000);
         // printing the states
         Log.d(TAG, "AddState: at the end states=>"+states);
     }
