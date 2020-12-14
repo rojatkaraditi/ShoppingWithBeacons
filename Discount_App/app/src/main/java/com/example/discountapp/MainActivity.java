@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
     //////////// bacon code
     private void UpdateUI() {
+        Log.d(TAG, "UpdateUI: with =>"+currentState+"mechanism.getCurrentSate=>"+mechanism1.getCurrentState());
         if (!currentState.equals(mechanism1.getCurrentState())){
 //            nearest_tv.setText(mechanism1.getCurrentState());
             switch (mechanism1.getCurrentState()){
