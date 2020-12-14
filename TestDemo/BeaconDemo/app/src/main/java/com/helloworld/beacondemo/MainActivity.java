@@ -2,17 +2,10 @@ package com.helloworld.beacondemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
@@ -33,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
     private static Map<String, List<String>> PLACES_BY_BEACONS;
     int count = 1;
     TextView nearest_tv,output_tv;
-    Algo1 algo1;
+    Mechanism1 mechanism1;
+    Object obj = null; // object used to determine runnable to show all items
+    Runnable runnable;
     String currentState;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +40,15 @@ public class MainActivity extends AppCompatActivity {
         nearest_tv = findViewById(R.id.nearest_tv);
         output_tv = findViewById(R.id.output_tv);
 
+        handler = new Handler();
         Map<Integer, String> listBeaconMap = new HashMap<>();
         listBeaconMap.put(49427,"B1");
         listBeaconMap.put(26535,"A100");
         listBeaconMap.put(7518,"D7");
         listBeaconMap.put(49357,"D8");
         // starting new algo1
-        algo1 =  new Algo1(listBeaconMap);
-        currentState = algo1.getCurrentState();
+        mechanism1 =  new Mechanism1(listBeaconMap);
+        currentState = mechanism1.getCurrentState();
         beaconManager = new BeaconManager(this);
         region = new BeaconRegion("ranged region",
                 UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
@@ -74,16 +71,17 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("demo","---------------------");
                     Beacon nearestBeacon = list.get(0);
                     // adding first beacon to states
-                    algo1.AddState(listBeaconMap.get(nearestBeacon.getMajor()));
+                    mechanism1.AddState(listBeaconMap.get(nearestBeacon.getMajor()));
                     nearest_tv.setText(listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","---------------------");
-                    List<String> places = placesNearBeacon(nearestBeacon);
+//                    List<String> places = placesNearBeacon(nearestBeacon);
                     // TODO: update the UI here
 //                    Log.d("Airport", "Nearest places: " + places);
                     UpdateUI();
                 }
             }
+
         });
 
 
@@ -116,9 +114,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
     private void UpdateUI() {
-        if (!currentState.equals(algo1.getCurrentState())){
-            nearest_tv.setText(algo1.getCurrentState());
+        if (!currentState.equals(mechanism1.getCurrentState())){
+            nearest_tv.setText(mechanism1.getCurrentState());
         }
+        if (runnable!=null){
+            handler.removeCallbacks(runnable);
+        }
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                mechanism1.setCurrentState(mechanism1.ALL_ITEMS);
+                nearest_tv.setText(mechanism1.ALL_ITEMS);
+            }
+        };
+        handler.postDelayed(runnable,45000);
     }
 
 
