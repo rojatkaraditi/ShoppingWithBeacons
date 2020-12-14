@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
 import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("demo","Count is : "+count++);
                     Log.d("demo","---------------------");
                     Beacon nearestBeacon = list.get(0);
+                    Toast.makeText(MainActivity.this, "Top => "+listBeaconMap.get(nearestBeacon.getMajor()), Toast.LENGTH_SHORT).show();
                     // adding first beacon to states
                     mechanism1.AddState(listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
@@ -158,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
             switch (mechanism1.getCurrentState()){
                 case "D8":
                     break;
-                case "B7":
+                case "B1":
                     // grocery
                     ShowIndicatorOn(grocery_tv);
                     new GetItems(getString(R.string.grocery_tag)).execute();
