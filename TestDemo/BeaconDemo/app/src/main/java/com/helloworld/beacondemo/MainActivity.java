@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     int count = 1;
     TextView nearest_tv,output_tv;
     Mechanism1 mechanism1;
-    Object obj = null; // object used to determine runnable to show all items
+//    Object obj = null; // object used to determine runnable to show all items
     Runnable runnable;
     String currentState;
     Handler handler;

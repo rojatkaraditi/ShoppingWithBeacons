@@ -1,0 +1,30 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.DiscountApp" parent="Theme.MaterialComponents.Light">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/blue_dull</item>
+        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/blue_dark</item>
+        <item name="colorSecondaryVariant">@color/blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+<!--        change   -->
+<!--        <item name="toolbarStyle">@style/toolbar_style</item>-->
+
+        <!-- Status bar color. -->
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+<!--        <item name="statusBarBackground">@color/blue</item>-->
+        <!-- Customize your theme here. -->
+
+    </style>
+
+    <style name="toolbar_style" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="statusBarBackground">@color/blue</item>
+        <item name="colorOnPrimarySurface">@color/blue</item>
+<!--        <item name="tooltipForegroundColor">@color/blue_dull</item>-->
+    </style>
+</resources>

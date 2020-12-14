@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Discount App</string>
+    <string name="discount">"Discount :"</string>
+    <string name="price_txt">Price :</string>
+    <string name="region_txt">"Region: "</string>
+    <string name="get_item_url">http://206.81.0.65:3000/api/v1/items?</string>
+    <string name="produce_txt">Produce</string>
+    <string name="life_style_txt">LifeStyle</string>
+    <string name="grocery_txt">Grocery</string>
+    <string name="produce_tag">produce</string>
+    <string name="life_style_tag">lifestyle</string>
+    <string name="grocery_tag">grocery</string>
+    <string name="item_image_description">Item Image</string>
+    <string name="image_url">http://206.81.0.65:3000/api/v1/images/</string>
+</resources>
