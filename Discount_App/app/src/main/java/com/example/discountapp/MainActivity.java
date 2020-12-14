@@ -142,8 +142,8 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
 //        findViewById(R.id.produce_btn).setOnClickListener(v -> {
-//            ShowIndicatorOn(produce_tv);
-//            new GetItems(getString(R.string.produce_tag)).execute();
+//            ShowIndicatorOn(produce_tv);new GetItems(null).execute();
+//            HideIndicator();
 //        });
 
 //        findViewById(R.id.grocery_btn).setOnClickListener(v -> {
@@ -162,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
 //            nearest_tv.setText(mechanism1.getCurrentState());
             switch (mechanism1.getCurrentState()){
                 case "D8":
+                    Log.d(TAG, "UpdateUI: D8 do not anything");
                     break;
                 case "B1":
                     // grocery
@@ -191,7 +192,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 mechanism1.setCurrentState(mechanism1.ALL_ITEMS);
-                nearest_tv.setText(mechanism1.ALL_ITEMS);
+                HideIndicator();
+                new GetItems(null).execute();
             }
         };
         handler.postDelayed(runnable,45000);

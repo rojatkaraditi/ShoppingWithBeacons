@@ -43,7 +43,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Item item = items.get(position);
         Log.d(TAG, "onBindViewHolder: in rv adapter item =>"+item);
         holder.item_name.setText(item.name);
-        holder.item_discount.setText(item.discount+"");
+        holder.item_discount.setText(item.discount+" %");
         holder.item_price.setText(item.price+"");
         holder.item_discount_price.setText(item.discountPrice);
         holder.item_region.setText(item.region);
