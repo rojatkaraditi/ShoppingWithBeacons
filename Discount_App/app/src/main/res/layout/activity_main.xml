@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Get produce"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/lifesytle_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Get lifesytle"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/grocery_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Get Grocery"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

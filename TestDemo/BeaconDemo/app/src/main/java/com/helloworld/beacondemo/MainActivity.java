@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 
         nearest_tv = findViewById(R.id.nearest_tv);
         output_tv = findViewById(R.id.output_tv);
-
         handler = new Handler();
         Map<Integer, String> listBeaconMap = new HashMap<>();
         listBeaconMap.put(49427,"B1");
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         currentState = mechanism1.getCurrentState();
         beaconManager = new BeaconManager(this);
         beaconManager.setScanRequestDelay(5000);
+        beaconManager.setForegroundScanPeriod(200,1000);
         region = new BeaconRegion("ranged region",
                 UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
 
@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         beaconManager.stopRanging(region);
-
         super.onPause();
     }
 

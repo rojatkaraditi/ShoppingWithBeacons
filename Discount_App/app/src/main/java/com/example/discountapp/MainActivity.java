@@ -8,10 +8,15 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
+import com.estimote.coresdk.observation.region.beacon.BeaconRegion;
+import com.estimote.coresdk.recognition.packets.Beacon;
+import com.estimote.coresdk.service.BeaconManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
@@ -22,6 +27,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -36,11 +45,80 @@ public class MainActivity extends AppCompatActivity {
     TextView indicator,produce_tv,lifestyle_tv,grocery_tv;
     ItemAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+    // beacons variables
+    private BeaconManager beaconManager;
+    private BeaconRegion region;
+    TextView nearest_tv,output_tv;
+    Mechanism1 mechanism1;
+    Runnable runnable;
+    int count = 1;
+    String currentState;
+    Handler handler;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SystemRequirementsChecker.checkWithDefaultDialogs(this);
+
+        beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+            @Override
+            public void onServiceReady() {
+                beaconManager.startRanging(region);
+            }
+        });
+    }
+
+    @Override
+    protected void onPause() {
+        beaconManager.stopRanging(region);
+        super.onPause();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //////////////////   beacons code
+//        nearest_tv = findViewById(R.id.nearest_tv);
+//        output_tv = findViewById(R.id.output_tv);
+        handler = new Handler();
+        Map<Integer, String> listBeaconMap = new HashMap<>();
+        listBeaconMap.put(49427,"B1");
+        listBeaconMap.put(26535,"A100");
+        listBeaconMap.put(7518,"D7");
+        listBeaconMap.put(49357,"D8");
+        // starting new algo1
+        mechanism1 =  new Mechanism1(listBeaconMap);
+        currentState = mechanism1.getCurrentState();
+        beaconManager = new BeaconManager(this);
+        beaconManager.setScanRequestDelay(5000);
+        beaconManager.setForegroundScanPeriod(200,1000);
+        region = new BeaconRegion("ranged region",
+                UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
+        // add this below:
+        beaconManager.setRangingListener(new BeaconManager.BeaconRangingListener() {
+            @Override
+            public void onBeaconsDiscovered(BeaconRegion region, List<Beacon> list) {
+                if (!list.isEmpty()) {
+                    Log.d("demo","Count is : "+count++);
+                    Log.d("demo","---------------------");
+                    Beacon nearestBeacon = list.get(0);
+                    // adding first beacon to states
+                    mechanism1.AddState(listBeaconMap.get(nearestBeacon.getMajor()));
+                    Log.d("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
+                    Log.d("demo","---------------------");
+//                    List<String> places = placesNearBeacon(nearestBeacon);
+                    // TODO: update the UI here
+//                    Log.d("Airport", "Nearest places: " + places);
+                    UpdateUI();
+                }
+            }
+        });
+
+        /////////////////
+
 
         rv = findViewById(R.id.rv_in_main);
         indicator = findViewById(R.id.region_indicator);
@@ -56,26 +134,65 @@ public class MainActivity extends AppCompatActivity {
 
         new GetItems(null).execute();
 
-        findViewById(R.id.lifesytle_btn).setOnClickListener(v -> {
-            ShowIndicatorOn(lifestyle_tv);
-            new GetItems(getString(R.string.life_style_tag)).execute();
-        });
+//        findViewById(R.id.lifesytle_btn).setOnClickListener(v -> {
+//            ShowIndicatorOn(lifestyle_tv);
+//            new GetItems(getString(R.string.life_style_tag)).execute();
+//        });
 
-        findViewById(R.id.produce_btn).setOnClickListener(v -> {
-            ShowIndicatorOn(produce_tv);
-            new GetItems(getString(R.string.produce_tag)).execute();
-        });
+//        findViewById(R.id.produce_btn).setOnClickListener(v -> {
+//            ShowIndicatorOn(produce_tv);
+//            new GetItems(getString(R.string.produce_tag)).execute();
+//        });
 
-        findViewById(R.id.grocery_btn).setOnClickListener(v -> {
-            ShowIndicatorOn(grocery_tv);
-            new GetItems(getString(R.string.grocery_tag)).execute();
-        });
+//        findViewById(R.id.grocery_btn).setOnClickListener(v -> {
+//            ShowIndicatorOn(grocery_tv);
+//            new GetItems(getString(R.string.grocery_tag)).execute();
+//        });
 
     }
 
-//    public void GetItems(View view) {
-//        new GetItems(view.getTag().toString()).execute();
-//    }
+    //////////// bacon code
+    private void UpdateUI() {
+        if (!currentState.equals(mechanism1.getCurrentState())){
+//            nearest_tv.setText(mechanism1.getCurrentState());
+            switch (mechanism1.getCurrentState()){
+                case "D8":
+                    break;
+                case "B7":
+                    // grocery
+                    ShowIndicatorOn(grocery_tv);
+                    new GetItems(getString(R.string.grocery_tag)).execute();
+                    break;
+                case "A100":
+                    // life Style
+                    ShowIndicatorOn(lifestyle_tv);
+                    new GetItems(getString(R.string.life_style_tag)).execute();
+                    break;
+                case "D7":
+                    // produce
+                    ShowIndicatorOn(produce_tv);
+                    new GetItems(getString(R.string.produce_tag)).execute();
+                    break;
+                case Mechanism1.ALL_ITEMS:
+                    new GetItems(null).execute();
+                    HideIndicator();
+                    break;
+            }
+        }
+        if (runnable!=null){
+            handler.removeCallbacks(runnable);
+        }
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                mechanism1.setCurrentState(mechanism1.ALL_ITEMS);
+                nearest_tv.setText(mechanism1.ALL_ITEMS);
+            }
+        };
+        handler.postDelayed(runnable,45000);
+    }
+    ////////////
+
 
     class GetItems extends AsyncTask<Void,Void,Void> {
         String type = "";
