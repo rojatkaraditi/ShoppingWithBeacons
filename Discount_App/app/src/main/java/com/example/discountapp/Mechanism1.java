@@ -33,7 +33,7 @@ public class Mechanism1 {
                 Log.d(TAG, "run: called, adding last added element");
             }
         };
-        updateStates.postDelayed(runnable,7000);
+        updateStates.postDelayed(runnable,4000);
     }
 
     public void AddState(String state){
@@ -44,7 +44,7 @@ public class Mechanism1 {
         states.add(state);
         if (CheckForConsecutiveAreSame()) currentState = state;
         //start the handler
-        updateStates.postDelayed(runnable,7000);
+        updateStates.postDelayed(runnable,4000);
         // printing the states
         Log.d(TAG, "AddState: at the end states=>"+states);
     }
