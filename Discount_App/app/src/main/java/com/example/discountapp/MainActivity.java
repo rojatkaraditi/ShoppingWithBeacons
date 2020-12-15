@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         mechanism1 =  new Mechanism1(listBeaconMap);
         currentState = mechanism1.getCurrentState();
         beaconManager = new BeaconManager(this);
-        beaconManager.setScanRequestDelay(5000);
+        beaconManager.setScanRequestDelay(500);
         beaconManager.setForegroundScanPeriod(200,1000);
         region = new BeaconRegion("ranged region",
                 UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);

@@ -23,7 +23,7 @@ public class Mechanism1 {
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
-        this.states.add(ALL_ITEMS);
+ //       this.states.add(ALL_ITEMS);
 //         every 2 seconds it will add All_items state if there is no add state function called
         updateStates = new Handler();
         runnable =  new Runnable() {
@@ -33,7 +33,7 @@ public class Mechanism1 {
                 Log.d(TAG, "run: called, adding last added element");
             }
         };
-        updateStates.postDelayed(runnable,4000);
+        updateStates.postDelayed(runnable,3000);
     }
 
     public void AddState(String state){
@@ -44,7 +44,7 @@ public class Mechanism1 {
         states.add(state);
         if (CheckForConsecutiveAreSame()) currentState = state;
         //start the handler
-        updateStates.postDelayed(runnable,4000);
+        updateStates.postDelayed(runnable,3000);
         // printing the states
         Log.d(TAG, "AddState: at the end states=>"+states);
     }
