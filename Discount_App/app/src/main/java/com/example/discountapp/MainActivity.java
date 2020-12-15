@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("demo","Count is : "+count++);
                     Log.d("demo","---------------------");
                     Beacon nearestBeacon = list.get(0);
-                    Toast.makeText(MainActivity.this, "Top => "+listBeaconMap.get(nearestBeacon.getMajor()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Nearest Beacon => "+listBeaconMap.get(nearestBeacon.getMajor()), Toast.LENGTH_SHORT).show();
                     // adding first beacon to states
                     mechanism1.AddState(listBeaconMap.get(nearestBeacon.getMajor()));
                     Log.d("demo","Nearest Beacon" +" -> "+listBeaconMap.get(nearestBeacon.getMajor()));
@@ -140,12 +140,13 @@ public class MainActivity extends AppCompatActivity {
 //            ShowIndicatorOn(lifestyle_tv);
 //            new GetItems(getString(R.string.life_style_tag)).execute();
 //        });
-
+//
 //        findViewById(R.id.produce_btn).setOnClickListener(v -> {
 //            ShowIndicatorOn(produce_tv);new GetItems(null).execute();
-//            HideIndicator();
+//            ShowIndicatorOn(produce_tv);
+////            HideIndicator();
 //        });
-
+//
 //        findViewById(R.id.grocery_btn).setOnClickListener(v -> {
 //            ShowIndicatorOn(grocery_tv);
 //            new GetItems(getString(R.string.grocery_tag)).execute();
@@ -156,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     //////////// bacon code
     private void UpdateUI() {
         Log.d(TAG, "UpdateUI: with =>"+currentState+"mechanism.getCurrentSate=>"+mechanism1.getCurrentState());
-        Toast.makeText(this, "UpdateUI: with =>"+currentState+"mechanism.getCurrentSate=>"+mechanism1.getCurrentState(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "UpdateUI: with =>"+currentState+"mechanism.getCurrentSate=>"+mechanism1.getCurrentState(), Toast.LENGTH_SHORT).show();
         if (!currentState.equals(mechanism1.getCurrentState())){
             currentState = mechanism1.getCurrentState();
 //            nearest_tv.setText(mechanism1.getCurrentState());
