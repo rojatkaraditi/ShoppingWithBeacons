@@ -164,11 +164,14 @@ public class MainActivity extends AppCompatActivity {
             switch (mechanism1.getCurrentState()){
                 case "D8":
                     Log.d(TAG, "UpdateUI: D8 do not anything");
-                    break;
-                case "B1":
                     // grocery
                     ShowIndicatorOn(grocery_tv);
                     new GetItems(getString(R.string.grocery_tag)).execute();
+                    break;
+                case "B1":
+                    // grocery
+//                    ShowIndicatorOn(grocery_tv);
+//                    new GetItems(getString(R.string.grocery_tag)).execute();
                     break;
                 case "A100":
                     // life Style
