@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Mechanism1 {
     static final String ALL_ITEMS = "ALL_Items";
-    private static final String TAG = "okay_Algo1";
+    private static final String TAG = "okay_Mechanism1";
     ArrayList<String> states;
     Map<Integer, String> listBeaconMap;
     String currentState = ALL_ITEMS;
@@ -23,8 +23,8 @@ public class Mechanism1 {
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
         this.states.add(ALL_ITEMS);
- //       this.states.add(ALL_ITEMS);
-//         every 2 seconds it will add All_items state if there is no add state function called
+//        this.states.add(ALL_ITEMS);
+//         every 3 seconds it will add All_items state if there is no add state function called
         updateStates = new Handler();
         runnable =  new Runnable() {
             @Override
